@@ -1,1 +1,10 @@
-{}
+{
+  "description": "An e-commerce platform offering a streamlined shopping experience for Western-style clothing with user-friendly browsing, secure checkout, and admin management.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}
