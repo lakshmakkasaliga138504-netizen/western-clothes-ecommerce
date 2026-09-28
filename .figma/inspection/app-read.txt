@@ -1,0 +1,810 @@
+[/workspaces/default/code/src/App.tsx#a44f]
+1:export default function App() {
+2:  return (
+3:    <div className="bg-gray-100 min-h-screen py-10 px-6">
+4:      <div className="max-w-5xl mx-auto">
+5:        {/* Page Header */}
+6:        <div className="text-center mb-10">
+7:          <h1 className="text-2xl font-bold text-gray-800 tracking-widest uppercase">
+8:            WESTERN CLOTHES
+9:          </h1>
+10:          <p className="text-sm text-gray-500 mt-1">
+11:            Mid-Fidelity Website Wireframe — 11 Screens
+12:          </p>
+13:          <div className="mt-2 h-px bg-gray-300" />
+14:        </div>
+15:
+16:        <div className="space-y-12">
+17:
+18:          {/* ── SCREEN 1: LOGIN PAGE ─────────────────────────────────── */}
+19:          <Screen number={1} title="LOGIN PAGE">
+20:            <div className="flex flex-col items-center py-10 px-6">
+21:              <div className="mb-6 text-center">
+22:                <div className="text-xl font-bold tracking-widest text-gray-800 uppercase border-b-2 border-gray-800 pb-1">
+23:                  WESTERN CLOTHES
+24:                </div>
+25:                <div className="text-xs text-gray-500 mt-1">Your Western Style Destination</div>
+26:              </div>
+27:              <ImgBox w="w-48" h="h-32" label="Brand Image" className="mb-6" />
+28:              <div className="w-full max-w-sm space-y-3">
+29:                <InputField label="Email / Username" placeholder="Enter your email or username" />
+30:                <InputField label="Password" placeholder="Enter your password" type="password" />
+31:                <div className="flex items-center justify-between text-xs text-gray-600">
+32:                  <label className="flex items-center gap-1.5 cursor-pointer">
+33:                    <CheckBox /> Remember Me
+34:                  </label>
+35:                  <span className="underline cursor-pointer text-gray-500">Forgot Password?</span>
+36:                </div>
+37:                <WireButton label="LOGIN" />
+38:                <p className="text-center text-xs text-gray-500 mt-2">
+39:                  {"Don't have an account? "}
+40:                  <span className="underline cursor-pointer text-gray-700 font-medium">Register here</span>
+41:                </p>
+42:              </div>
+43:            </div>
+44:          </Screen>
+45:
+46:          {/* ── SCREEN 2: HOME PAGE ──────────────────────────────────── */}
+47:          <Screen number={2} title="HOME PAGE">
+48:            <NavBar />
+49:            <div className="px-6 py-4 space-y-5">
+50:              <div className="relative">
+51:                <ImgBox w="w-full" h="h-52" label="Hero Banner — New Arrivals" />
+52:                <div className="absolute inset-0 flex flex-col items-center justify-center">
+53:                  <div className="bg-white/90 px-6 py-3 text-center border border-gray-300">
+54:                    <p className="text-xs text-gray-500 uppercase tracking-widest">New Collection 2026</p>
+55:                    <h2 className="text-2xl font-bold text-gray-800 my-1">New Styles, New You</h2>
+56:                    <p className="text-xs text-gray-600 mb-3">Explore the latest western fashion trends</p>
+57:                    <button className="bg-gray-800 text-white text-xs px-5 py-2 border border-gray-800 hover:bg-gray-700">
+58:                      SHOP NOW →
+59:                    </button>
+60:                  </div>
+61:                </div>
+62:              </div>
+63:              <div>
+64:                <SectionLabel>Shop by Category</SectionLabel>
+65:                <div className="grid grid-cols-4 gap-3 mt-2">
+66:                  {["Women", "Men", "New Arrivals", "Sale"].map((cat) => (
+67:                    <div key={cat} className="border border-gray-300 text-center p-3 bg-white">
+68:                      <ImgBox w="w-full" h="h-24" label={cat} />
+69:                      <p className="text-xs font-semibold text-gray-700 mt-2 uppercase tracking-wide">{cat}</p>
+70:                    </div>
+71:                  ))}
+72:                </div>
+73:              </div>
+74:              <div>
+75:                <SectionLabel>Featured Products</SectionLabel>
+76:                <div className="grid grid-cols-4 gap-3 mt-2">
+77:                  {["Denim Jacket", "Floral Dress", "Boots", "Plaid Shirt"].map((p) => (
+78:                    <MiniProductCard key={p} name={p} price="₹ 1,299" />
+79:                  ))}
+80:                </div>
+81:              </div>
+82:            </div>
+83:          </Screen>
+84:
+85:          {/* ── SCREEN 3: PRODUCT / CATEGORY PAGE ───────────────────── */}
+86:          <Screen number={3} title="PRODUCT / CATEGORY PAGE">
+87:            <NavBar />
+88:            <div className="px-6 py-4">
+89:              <div className="flex items-center justify-between mb-3">
+90:                <h2 className="text-base font-bold text-gray-800">{"Women's Collection"}</h2>
+91:                <div className="flex items-center gap-2">
+92:                  <span className="text-xs text-gray-500">Sort by:</span>
+93:                  <select className="border border-gray-300 text-xs px-2 py-1 bg-white text-gray-700">
+94:                    <option>Popularity</option>
+95:                    <option>Price: Low to High</option>
+96:                    <option>Price: High to Low</option>
+97:                    <option>Newest First</option>
+98:                  </select>
+99:                </div>
+100:              </div>
+101:              <div className="flex gap-5">
+102:                <div className="w-44 flex-shrink-0 space-y-4">
+103:                  <FilterGroup title="Category">
+104:                    {["Dresses", "Tops", "Jeans", "Jackets", "Skirts", "Shorts"].map((i) => (
+105:                      <FilterItem key={i} label={i} />
+106:                    ))}
+107:                  </FilterGroup>
+108:                  <FilterGroup title="Price Range">
+109:                    <div className="space-y-1 mb-1">
+110:                      <div className="text-xs text-gray-500">₹ 0 — ₹ 5,000</div>
+111:                      <div className="h-1.5 bg-gray-200 rounded relative">
+112:                        <div className="absolute left-1/4 right-1/4 h-full bg-gray-600 rounded" />
+113:                      </div>
+114:                    </div>
+115:                    {["Under ₹500", "₹500–₹1000", "₹1000–₹2000", "Above ₹2000"].map((i) => (
+116:                      <FilterItem key={i} label={i} />
+117:                    ))}
+118:                  </FilterGroup>
+119:                  <FilterGroup title="Size">
+120:                    <div className="flex flex-wrap gap-1 mt-1">
+121:                      {["XS", "S", "M", "L", "XL", "XXL"].map((s) => (
+122:                        <span key={s} className="border border-gray-400 text-xs px-2 py-0.5 text-gray-700">{s}</span>
+123:                      ))}
+124:                    </div>
+125:                  </FilterGroup>
+126:                  <FilterGroup title="Color">
+127:                    <div className="flex flex-wrap gap-1.5 mt-1">
+128:                      {["Black", "White", "Grey", "Navy", "Brown", "Beige"].map((c) => (
+129:                        <span key={c} className="text-xs text-gray-600 border border-gray-300 px-1.5 py-0.5">{c}</span>
+130:                      ))}
+131:                    </div>
+132:                  </FilterGroup>
+133:                  <button className="w-full border border-gray-400 text-xs py-1.5 text-gray-600 mt-1">
+134:                    Clear Filters
+135:                  </button>
+136:                </div>
+137:                <div className="flex-1 grid grid-cols-3 gap-4">
+138:                  {[
+139:                    { name: "Floral Midi Dress", price: "₹ 1,499" },
+140:                    { name: "Denim Jacket", price: "₹ 2,199" },
+141:                    { name: "Boho Top", price: "₹ 799" },
+142:                    { name: "Straight-Cut Jeans", price: "₹ 1,699" },
+143:                    { name: "Leather Belt Bag", price: "₹ 999" },
+144:                    { name: "Plaid Skirt", price: "₹ 1,099" },
+145:                  ].map((p) => (
+146:                    <ProductCard key={p.name} name={p.name} price={p.price} />
+147:                  ))}
+148:                </div>
+149:              </div>
+150:            </div>
+151:          </Screen>
+152:
+153:          {/* ── SCREEN 4: PRODUCT DETAILS PAGE ──────────────────────── */}
+154:          <Screen number={4} title="PRODUCT DETAILS PAGE">
+155:            <NavBar />
+156:            <div className="px-6 py-4">
+157:              <div className="text-xs text-gray-500 mb-4">
+158:                Home &rsaquo; Women &rsaquo; Dresses &rsaquo;{" "}
+159:                <span className="text-gray-800 font-medium">Floral Midi Dress</span>
+160:              </div>
+161:              <div className="flex gap-8">
+162:                <div className="flex flex-col gap-2">
+163:                  <ImgBox w="w-64" h="h-80" label="Product Image" />
+164:                  <div className="flex gap-2">
+165:                    {[1, 2, 3, 4].map((t) => (
+166:                      <ImgBox key={t} w="w-14" h="h-14" label={`View ${t}`} />
+167:                    ))}
+168:                  </div>
+169:                </div>
+170:                <div className="flex-1 space-y-4">
+171:                  <div>
+172:                    <h2 className="text-xl font-bold text-gray-800">Floral Midi Dress</h2>
+173:                    <div className="text-xs text-gray-500 mt-0.5">SKU: WC-DR-2026-001</div>
+174:                  </div>
+175:                  <div className="text-2xl font-bold text-gray-800">
+176:                    ₹ 1,499
+177:                    <span className="text-sm font-normal text-gray-400 line-through ml-2">₹ 2,000</span>
+178:                    <span className="text-xs text-gray-600 ml-2 bg-gray-200 px-2 py-0.5">25% OFF</span>
+179:                  </div>
+180:                  <p className="text-xs text-gray-600 leading-5">
+181:                    A stunning floral midi dress perfect for any occasion. Made with premium breathable fabric,
+182:                    this versatile piece can be styled for casual outings or semi-formal events.
+183:                    Available in multiple sizes and colors.
+184:                  </p>
+185:                  <div>
+186:                    <label className="text-xs font-semibold text-gray-700 uppercase tracking-wide block mb-1">Select Size</label>
+187:                    <div className="flex gap-2">
+188:                      {["XS", "S", "M", "L", "XL"].map((s) => (
+189:                        <div key={s} className="border border-gray-400 text-xs w-9 h-9 flex items-center justify-center text-gray-700 cursor-pointer hover:bg-gray-100">
+190:                          {s}
+191:                        </div>
+192:                      ))}
+193:                    </div>
+194:                    <p className="text-xs text-gray-400 mt-1 underline cursor-pointer">Size Guide</p>
+195:                  </div>
+196:                  <div>
+197:                    <label className="text-xs font-semibold text-gray-700 uppercase tracking-wide block mb-1">Select Color</label>
+198:                    <div className="flex gap-2">
+199:                      {["bg-gray-200", "bg-gray-400", "bg-gray-600", "bg-gray-800"].map((c, i) => (
+200:                        <div key={i} className={`w-7 h-7 rounded-full border-2 border-gray-400 ${c}`} />
+201:                      ))}
+202:                    </div>
+203:                  </div>
+204:                  <div>
+205:                    <label className="text-xs font-semibold text-gray-700 uppercase tracking-wide block mb-1">Quantity</label>
+206:                    <div className="flex items-center">
+207:                      <button className="border border-gray-400 text-gray-700 w-8 h-8 text-base">−</button>
+208:                      <div className="border-t border-b border-gray-400 w-10 h-8 flex items-center justify-center text-xs text-gray-700">1</div>
+209:                      <button className="border border-gray-400 text-gray-700 w-8 h-8 text-base">+</button>
+210:                    </div>
+211:                  </div>
+212:                  <div className="flex gap-3 pt-2">
+213:                    <button className="flex-1 bg-gray-800 text-white text-xs py-2.5 border border-gray-800 hover:bg-gray-700 font-medium tracking-wide uppercase">
+214:                      Add to Cart
+215:                    </button>
+216:                    <button className="flex-1 border border-gray-800 text-gray-800 text-xs py-2.5 hover:bg-gray-100 font-medium tracking-wide uppercase">
+217:                      Buy Now
+218:                    </button>
+219:                  </div>
+220:                </div>
+221:              </div>
+222:            </div>
+223:          </Screen>
+224:
+225:          {/* ── SCREEN 5: SHOPPING CART PAGE ─────────────────────────── */}
+226:          <Screen number={5} title="SHOPPING CART PAGE">
+227:            <NavBar />
+228:            <div className="px-6 py-4">
+229:              <h2 className="text-base font-bold text-gray-800 mb-4">
+230:                Shopping Cart <span className="text-sm font-normal text-gray-500">(3 items)</span>
+231:              </h2>
+232:              <div className="flex gap-6">
+233:                <div className="flex-1 space-y-3">
+234:                  <div className="grid grid-cols-[auto_1fr_auto_auto_auto] gap-4 text-xs font-semibold text-gray-500 uppercase tracking-wide border-b border-gray-200 pb-2">
+235:                    <span className="w-16">Product</span>
+236:                    <span>Details</span>
+237:                    <span>Price</span>
+238:                    <span>Qty</span>
+239:                    <span>Remove</span>
+240:                  </div>
+241:                  {[
+242:                    { name: "Floral Midi Dress", size: "M", color: "Grey", price: "₹ 1,499", qty: 1 },
+243:                    { name: "Denim Jacket", size: "L", color: "Black", price: "₹ 2,199", qty: 2 },
+244:                    { name: "Boho Top", size: "S", color: "White", price: "₹ 799", qty: 1 },
+245:                  ].map((item) => (
+246:                    <div key={item.name} className="grid grid-cols-[auto_1fr_auto_auto_auto] gap-4 items-center py-3 border-b border-gray-100">
+247:                      <ImgBox w="w-16" h="h-20" label="Img" />
+248:                      <div>
+249:                        <p className="text-xs font-semibold text-gray-800">{item.name}</p>
+250:                        <p className="text-xs text-gray-500 mt-0.5">Size: {item.size} | Color: {item.color}</p>
+251:                      </div>
+252:                      <div className="text-xs font-semibold text-gray-800 whitespace-nowrap">{item.price}</div>
+253:                      <div className="flex items-center">
+254:                        <button className="border border-gray-300 text-gray-600 w-6 h-6 text-sm">−</button>
+255:                        <span className="border-t border-b border-gray-300 w-8 h-6 flex items-center justify-center text-xs text-gray-700">{item.qty}</span>
+256:                        <button className="border border-gray-300 text-gray-600 w-6 h-6 text-sm">+</button>
+257:                      </div>
+258:                      <button className="text-gray-400 hover:text-gray-600 text-xs border border-gray-300 w-6 h-6 flex items-center justify-center">✕</button>
+259:                    </div>
+260:                  ))}
+261:                </div>
+262:                <div className="w-60 flex-shrink-0 border border-gray-300 p-4 h-fit space-y-3">
+263:                  <h3 className="text-sm font-bold text-gray-800 border-b border-gray-200 pb-2">Order Summary</h3>
+264:                  <SummaryRow label="Subtotal (3 items)" value="₹ 6,496" />
+265:                  <SummaryRow label="Shipping" value="FREE" />
+266:                  <SummaryRow label="Discount" value="− ₹ 500" />
+267:                  <div className="border-t border-gray-300 pt-2">
+268:                    <SummaryRow label="Total" value="₹ 5,996" bold />
+269:                  </div>
+270:                  <button className="w-full bg-gray-800 text-white text-xs py-2.5 border border-gray-800 hover:bg-gray-700 font-medium uppercase tracking-wide mt-2">
+271:                    Proceed to Checkout →
+272:                  </button>
+273:                  <p className="text-xs text-center text-gray-400 underline cursor-pointer">Continue Shopping</p>
+274:                </div>
+275:              </div>
+276:            </div>
+277:          </Screen>
+278:
+279:          {/* ── SCREEN 6: CHECKOUT PAGE ──────────────────────────────── */}
+280:          <Screen number={6} title="CHECKOUT PAGE">
+281:            <NavBar />
+282:            <div className="px-6 py-4">
+283:              <h2 className="text-base font-bold text-gray-800 mb-4">Checkout</h2>
+284:              <div className="flex gap-6">
+285:                <div className="flex-1 space-y-5">
+286:                  <div className="border border-gray-300 p-4">
+287:                    <h3 className="text-sm font-bold text-gray-800 mb-3 pb-2 border-b border-gray-200">
+288:                      1. Delivery Address
+289:                    </h3>
+290:                    <div className="grid grid-cols-2 gap-3">
+291:                      <InputField label="Full Name" placeholder="e.g. Priya Sharma" />
+292:                      <InputField label="Mobile Number" placeholder="10-digit mobile number" />
+293:                      <div className="col-span-2">
+294:                        <InputField label="Address (House No., Street, Area)" placeholder="Enter full address" />
+295:                      </div>
+296:                      <InputField label="City" placeholder="City" />
+297:                      <InputField label="State" placeholder="State" />
+298:                      <InputField label="Pincode" placeholder="6-digit pincode" />
+299:                      <InputField label="Landmark (Optional)" placeholder="Near landmark" />
+300:                    </div>
+301:                  </div>
+302:                  <div className="border border-gray-300 p-4">
+303:                    <h3 className="text-sm font-bold text-gray-800 mb-3 pb-2 border-b border-gray-200">
+304:                      2. Payment Method
+305:                    </h3>
+306:                    <div className="space-y-2">
+307:                      {[
+308:                        { id: "cod", label: "Cash on Delivery (COD)", desc: "Pay when your order arrives" },
+309:                        { id: "upi", label: "UPI / QR Code", desc: "PhonePe, GPay, Paytm, BHIM" },
+310:                        { id: "card", label: "Credit / Debit Card", desc: "Visa, Mastercard, RuPay" },
+311:                        { id: "net", label: "Net Banking", desc: "All major Indian banks" },
+312:                      ].map((pm) => (
+313:                        <label key={pm.id} className="flex items-start gap-3 p-3 border border-gray-300 cursor-pointer hover:bg-gray-50">
+314:                          <input type="radio" name="payment" className="mt-0.5" defaultChecked={pm.id === "cod"} />
+315:                          <div>
+316:                            <p className="text-xs font-semibold text-gray-800">{pm.label}</p>
+317:                            <p className="text-xs text-gray-500">{pm.desc}</p>
+318:                          </div>
+319:                        </label>
+320:                      ))}
+321:                    </div>
+322:                  </div>
+323:                </div>
+324:                <div className="w-64 flex-shrink-0">
+325:                  <div className="border border-gray-300 p-4 space-y-3">
+326:                    <h3 className="text-sm font-bold text-gray-800 border-b border-gray-200 pb-2">3. Order Summary</h3>
+327:                    {[
+328:                      { name: "Floral Midi Dress × 1", price: "₹ 1,499" },
+329:                      { name: "Denim Jacket × 2", price: "₹ 4,398" },
+330:                      { name: "Boho Top × 1", price: "₹ 799" },
+331:                    ].map((it) => (
+332:                      <div key={it.name} className="flex justify-between text-xs text-gray-700">
+333:                        <span>{it.name}</span>
+334:                        <span className="font-medium">{it.price}</span>
+335:                      </div>
+336:                    ))}
+337:                    <div className="border-t border-gray-200 pt-2 space-y-1">
+338:                      <SummaryRow label="Subtotal" value="₹ 6,696" />
+339:                      <SummaryRow label="Shipping" value="FREE" />
+340:                      <SummaryRow label="Discount" value="− ₹ 500" />
+341:                      <div className="border-t border-gray-300 pt-2">
+342:                        <SummaryRow label="Grand Total" value="₹ 6,196" bold />
+343:                      </div>
+344:                    </div>
+345:                    <button className="w-full bg-gray-800 text-white text-xs py-2.5 border border-gray-800 hover:bg-gray-700 font-medium uppercase tracking-wide mt-2">
+346:                      Place Order →
+347:                    </button>
+348:                  </div>
+349:                </div>
+350:              </div>
+351:            </div>
+352:          </Screen>
+353:
+354:          {/* ── SCREEN 7: REGISTER PAGE ──────────────────────────────── */}
+355:          <Screen number={7} title="REGISTER PAGE">
+356:            <div className="flex flex-col items-center py-10 px-6">
+357:              <div className="mb-4 text-center">
+358:                <div className="text-xl font-bold tracking-widest text-gray-800 uppercase">WESTERN CLOTHES</div>
+359:                <h2 className="text-base font-semibold text-gray-700 mt-2">Create an Account</h2>
+360:                <p className="text-xs text-gray-500 mt-0.5">Join us and explore the latest western styles</p>
+361:              </div>
+362:              <div className="w-full max-w-sm space-y-3">
+363:                <InputField label="Full Name" placeholder="Enter your full name" />
+364:                <InputField label="Email Address" placeholder="Enter your email address" />
+365:                <InputField label="Mobile Number" placeholder="10-digit mobile number" />
+366:                <InputField label="Password" placeholder="Create a password (min. 8 characters)" type="password" />
+367:                <InputField label="Confirm Password" placeholder="Re-enter your password" type="password" />
+368:                <label className="flex items-start gap-2 text-xs text-gray-600 cursor-pointer">
+369:                  <CheckBox />
+370:                  <span>
+371:                    {"I agree to the "}
+372:                    <span className="underline">Terms & Conditions</span>
+373:                    {" and "}
+374:                    <span className="underline">Privacy Policy</span>
+375:                  </span>
+376:                </label>
+377:                <WireButton label="REGISTER" />
+378:                <p className="text-center text-xs text-gray-500 mt-2">
+379:                  {"Already have an account? "}
+380:                  <span className="underline cursor-pointer text-gray-700 font-medium">Login here</span>
+381:                </p>
+382:              </div>
+383:            </div>
+384:          </Screen>
+385:
+386:          {/* ── SCREEN 8: ABOUT US PAGE ──────────────────────────────── */}
+387:          <Screen number={8} title="ABOUT US PAGE">
+388:            <NavBar />
+389:            <div className="px-6 py-6 space-y-6">
+390:              <div className="text-center">
+391:                <h2 className="text-xl font-bold text-gray-800 uppercase tracking-wide">About Western Clothes</h2>
+392:                <div className="w-16 h-0.5 bg-gray-400 mx-auto mt-2" />
+393:              </div>
+394:              <div className="flex gap-8 items-start">
+395:                <ImgBox w="w-64" h="h-44" label="About Us Image" className="flex-shrink-0" />
+396:                <div className="space-y-3">
+397:                  <p className="text-xs text-gray-600 leading-5">
+398:                    Western Clothes is a premier e-commerce destination for authentic western-style fashion.
+399:                    Founded in 2020, we bring you carefully curated collections of denim, plaid, boots,
+400:                    and everything in between. Our mission is to make western fashion accessible, affordable,
+401:                    and trendsetting for everyone across India.
+402:                  </p>
+403:                  <p className="text-xs text-gray-600 leading-5">
+404:                    We partner directly with trusted manufacturers and designers to ensure every product
+405:                    meets our high standards of quality, comfort, and style. From casual everyday wear to
+406:                    statement pieces, Western Clothes is your one-stop shop for all things western.
+407:                  </p>
+408:                </div>
+409:              </div>
+410:              <div className="grid grid-cols-4 gap-4">
+411:                {[
+412:                  { title: "Quality Products", desc: "Premium fabrics and craftsmanship in every item" },
+413:                  { title: "Affordable Prices", desc: "Best prices without compromising on quality" },
+414:                  { title: "Happy Customers", desc: "10,000+ satisfied customers across India" },
+415:                  { title: "Trusted Brand", desc: "Verified seller with 4.8★ average rating" },
+416:                ].map((f) => (
+417:                  <div key={f.title} className="border border-gray-300 p-4 text-center space-y-2">
+418:                    <div className="w-10 h-10 bg-gray-200 rounded-full mx-auto flex items-center justify-center text-gray-500 text-lg">✦</div>
+419:                    <h4 className="text-xs font-bold text-gray-800 uppercase tracking-wide">{f.title}</h4>
+420:                    <p className="text-xs text-gray-500 leading-4">{f.desc}</p>
+421:                  </div>
+422:                ))}
+423:              </div>
+424:            </div>
+425:          </Screen>
+426:
+427:          {/* ── SCREEN 9: CONTACT US PAGE ────────────────────────────── */}
+428:          <Screen number={9} title="CONTACT US PAGE">
+429:            <NavBar />
+430:            <div className="px-6 py-6 space-y-4">
+431:              <div className="text-center">
+432:                <h2 className="text-xl font-bold text-gray-800 uppercase tracking-wide">Contact Us</h2>
+433:                <div className="w-16 h-0.5 bg-gray-400 mx-auto mt-2" />
+434:                <p className="text-xs text-gray-500 mt-2">{"We'd love to hear from you. Reach out any time!"}</p>
+435:              </div>
+436:              <div className="flex gap-8">
+437:                <div className="w-64 flex-shrink-0 space-y-4">
+438:                  <h3 className="text-sm font-bold text-gray-700 border-b border-gray-200 pb-1">Get in Touch</h3>
+439:                  {[
+440:                    { icon: "📍", label: "Address", val: "123, Fashion Street, Connaught Place, New Delhi — 110001" },
+441:                    { icon: "📞", label: "Phone", val: "+91 98765 43210" },
+442:                    { icon: "✉️", label: "Email", val: "support@westernclothes.in" },
+443:                    { icon: "🌐", label: "Website", val: "www.westernclothes.in" },
+444:                  ].map((c) => (
+445:                    <div key={c.label} className="flex gap-3">
+446:                      <div className="w-8 h-8 bg-gray-200 border border-gray-300 flex items-center justify-center text-sm flex-shrink-0">{c.icon}</div>
+447:                      <div>
+448:                        <p className="text-xs font-semibold text-gray-700">{c.label}</p>
+449:                        <p className="text-xs text-gray-500 leading-4">{c.val}</p>
+450:                      </div>
+451:                    </div>
+452:                  ))}
+453:                  <div className="border border-gray-200 p-3 mt-2">
+454:                    <p className="text-xs font-semibold text-gray-700 mb-1">Business Hours</p>
+455:                    <p className="text-xs text-gray-500">Mon – Sat: 9:00 AM – 6:00 PM</p>
+456:                    <p className="text-xs text-gray-500">Sunday: Closed</p>
+457:                  </div>
+458:                </div>
+459:                <div className="flex-1 border border-gray-300 p-5 space-y-3">
+460:                  <h3 className="text-sm font-bold text-gray-700 border-b border-gray-200 pb-2">Send Us a Message</h3>
+461:                  <div className="grid grid-cols-2 gap-3">
+462:                    <InputField label="Your Name" placeholder="Enter your name" />
+463:                    <InputField label="Email Address" placeholder="Enter your email" />
+464:                  </div>
+465:                  <InputField label="Subject" placeholder="Enter subject" />
+466:                  <div>
+467:                    <label className="block text-xs font-medium text-gray-700 mb-1">Message</label>
+468:                    <textarea
+469:                      className="w-full border border-gray-300 text-xs px-3 py-2 text-gray-700 bg-white resize-none h-28 placeholder-gray-400 outline-none"
+470:                      placeholder="Write your message here..."
+471:                    />
+472:                  </div>
+473:                  <button className="bg-gray-800 text-white text-xs px-6 py-2.5 border border-gray-800 hover:bg-gray-700 font-medium uppercase tracking-wide">
+474:                    Send Message →
+475:                  </button>
+476:                </div>
+477:              </div>
+478:            </div>
+479:          </Screen>
+480:
+481:          {/* ── SCREEN 10: ADMIN LOGIN PAGE ──────────────────────────── */}
+482:          <Screen number={10} title="ADMIN LOGIN PAGE">
+483:            <div className="flex flex-col items-center py-10 px-6">
+484:              <div className="mb-6 text-center">
+485:                <div className="text-xl font-bold tracking-widest text-gray-800 uppercase">WESTERN CLOTHES</div>
+486:                <div className="text-xs text-gray-500 tracking-widest uppercase border border-gray-300 px-3 py-0.5 inline-block mt-2">
+487:                  Admin Portal
+488:                </div>
+489:              </div>
+490:              <div className="w-full max-w-xs border border-gray-300 p-6 space-y-4 bg-white">
+491:                <h2 className="text-sm font-bold text-gray-800 text-center uppercase tracking-widest border-b border-gray-200 pb-3">
+492:                  Admin Login
+493:                </h2>
+494:                <InputField label="Username" placeholder="Enter admin username" />
+495:                <InputField label="Password" placeholder="Enter admin password" type="password" />
+496:                <label className="flex items-center gap-2 text-xs text-gray-600 cursor-pointer">
+497:                  <CheckBox /> Remember Me
+498:                </label>
+499:                <WireButton label="LOGIN" />
+500:                <p className="text-center text-xs text-gray-400 mt-1">Authorized personnel only</p>
+501:              </div>
+502:            </div>
+503:          </Screen>
+504:
+505:          {/* ── SCREEN 11: ADMIN DASHBOARD PAGE ─────────────────────── */}
+506:          <Screen number={11} title="ADMIN DASHBOARD PAGE">
+507:            <div className="flex min-h-96">
+508:              <div className="w-44 flex-shrink-0 bg-gray-800 text-white flex flex-col">
+509:                <div className="px-4 py-4 border-b border-gray-600">
+510:                  <div className="text-xs font-bold tracking-widest uppercase">Western Clothes</div>
+511:                  <div className="text-xs text-gray-400 mt-0.5">Admin Panel</div>
+512:                </div>
+513:                <nav className="flex-1 py-3">
+514:                  {[
+515:                    { icon: "⬛", label: "Dashboard", active: true },
+516:                    { icon: "📦", label: "Products", active: false },
+517:                    { icon: "🧾", label: "Orders", active: false },
+518:                    { icon: "👥", label: "Customers", active: false },
+519:                    { icon: "🗂️", label: "Categories", active: false },
+520:                    { icon: "🏷️", label: "Coupons", active: false },
+521:                    { icon: "📊", label: "Reports", active: false },
+522:                  ].map((item) => (
+523:                    <div
+524:                      key={item.label}
+525:                      className={`flex items-center gap-2.5 px-4 py-2.5 text-xs cursor-pointer ${item.active ? "bg-gray-600 font-semibold" : "text-gray-300 hover:bg-gray-700"}`}
+526:                    >
+527:                      <span className="text-sm">{item.icon}</span>
+528:                      {item.label}
+529:                    </div>
+530:                  ))}
+531:                </nav>
+532:                <div className="px-4 py-3 border-t border-gray-600">
+533:                  <div className="flex items-center gap-2 text-xs text-gray-300 cursor-pointer hover:text-white">
+534:                    <span>↩</span> Logout
+535:                  </div>
+536:                </div>
+537:              </div>
+538:              <div className="flex-1 bg-gray-50 p-5 space-y-5">
+539:                <div className="flex items-center justify-between">
+540:                  <h2 className="text-base font-bold text-gray-800">Dashboard Overview</h2>
+541:                  <div className="text-xs text-gray-500">Last updated: 14 Aug 2026, 10:30 AM</div>
+542:                </div>
+543:                <div className="grid grid-cols-4 gap-4">
+544:                  {[
+545:                    { label: "Total Orders", value: "1,284", sub: "+12% this month" },
+546:                    { label: "Total Customers", value: "4,670", sub: "+8% this month" },
+547:                    { label: "Total Products", value: "342", sub: "18 new this week" },
+548:                    { label: "Total Revenue", value: "₹ 8,42,500", sub: "+15% this month" },
+549:                  ].map((c) => (
+550:                    <div key={c.label} className="border border-gray-300 bg-white p-4 space-y-1">
+551:                      <div className="w-8 h-8 bg-gray-200 mb-2" />
+552:                      <p className="text-xs text-gray-500 uppercase tracking-wide">{c.label}</p>
+553:                      <p className="text-lg font-bold text-gray-800">{c.value}</p>
+554:                      <p className="text-xs text-gray-400">{c.sub}</p>
+555:                    </div>
+556:                  ))}
+557:                </div>
+558:                <div className="border border-gray-300 bg-white">
+559:                  <div className="px-4 py-3 border-b border-gray-200 flex items-center justify-between">
+560:                    <h3 className="text-xs font-bold text-gray-800 uppercase tracking-wide">Recent Orders</h3>
+561:                    <span className="text-xs text-gray-500 underline cursor-pointer">View All</span>
+562:                  </div>
+563:                  <table className="w-full text-xs">
+564:                    <thead>
+565:                      <tr className="border-b border-gray-200 bg-gray-50">
+566:                        {["Order ID", "Customer", "Items", "Date", "Amount", "Status"].map((h) => (
+567:                          <th key={h} className="text-left px-4 py-2.5 text-gray-500 font-semibold uppercase tracking-wide text-xs">
+568:                            {h}
+569:                          </th>
+570:                        ))}
+571:                      </tr>
+572:                    </thead>
+573:                    <tbody>
+574:                      {[
+575:                        { id: "#ORD-1052", name: "Priya Sharma", items: "3 items", date: "14 Aug 2026", amount: "₹ 3,497", status: "Delivered" },
+576:                        { id: "#ORD-1051", name: "Rohan Mehta", items: "1 item", date: "13 Aug 2026", amount: "₹ 1,499", status: "Shipped" },
+577:                        { id: "#ORD-1050", name: "Anjali Nair", items: "2 items", date: "13 Aug 2026", amount: "₹ 2,998", status: "Processing" },
+578:                        { id: "#ORD-1049", name: "Vikram Singh", items: "4 items", date: "12 Aug 2026", amount: "₹ 5,196", status: "Pending" },
+579:                        { id: "#ORD-1048", name: "Neha Gupta", items: "1 item", date: "11 Aug 2026", amount: "₹ 799", status: "Delivered" },
+580:                      ].map((row) => (
+581:                        <tr key={row.id} className="border-b border-gray-100 hover:bg-gray-50">
+582:                          <td className="px-4 py-2.5 font-medium text-gray-800">{row.id}</td>
+583:                          <td className="px-4 py-2.5 text-gray-700">{row.name}</td>
+584:                          <td className="px-4 py-2.5 text-gray-500">{row.items}</td>
+585:                          <td className="px-4 py-2.5 text-gray-500">{row.date}</td>
+586:                          <td className="px-4 py-2.5 font-medium text-gray-800">{row.amount}</td>
+587:                          <td className="px-4 py-2.5">
+588:                            <span className={`px-2 py-0.5 text-xs border ${
+589:                              row.status === "Delivered" ? "border-gray-400 text-gray-600 bg-gray-100" :
+590:                              row.status === "Shipped" ? "border-gray-500 text-gray-700" :
+591:                              row.status === "Processing" ? "border-gray-400 text-gray-600" :
+592:                              "border-gray-300 text-gray-400"
+593:                            }`}>
+594:                              {row.status}
+595:                            </span>
+596:                          </td>
+597:                        </tr>
+598:                      ))}
+599:                    </tbody>
+600:                  </table>
+601:                </div>
+602:                <div className="border border-gray-300 bg-white">
+603:                  <div className="px-4 py-3 border-b border-gray-200">
+604:                    <h3 className="text-xs font-bold text-gray-800 uppercase tracking-wide">Sales Overview — Last 6 Months</h3>
+605:                  </div>
+606:                  <div className="p-4">
+607:                    <div className="bg-gray-50 border border-dashed border-gray-300 h-40 flex flex-col items-center justify-end pb-3 gap-2">
+608:                      <div className="flex items-end gap-4 h-28 px-6">
+609:                        {[
+610:                          { month: "Mar", pct: 60 },
+611:                          { month: "Apr", pct: 45 },
+612:                          { month: "May", pct: 80 },
+613:                          { month: "Jun", pct: 55 },
+614:                          { month: "Jul", pct: 90 },
+615:                          { month: "Aug", pct: 70 },
+616:                        ].map((b) => (
+617:                          <div key={b.month} className="flex flex-col items-center gap-1 flex-1">
+618:                            <div
+619:                              className="w-full bg-gray-400 border border-gray-500"
+620:                              style={{ height: `${b.pct}%` }}
+621:                            />
+622:                            <span className="text-xs text-gray-400">{b.month}</span>
+623:                          </div>
+624:                        ))}
+625:                      </div>
+626:                      <p className="text-xs text-gray-400">[ Sales Chart Placeholder ]</p>
+627:                    </div>
+628:                  </div>
+629:                </div>
+630:              </div>
+631:            </div>
+632:          </Screen>
+633:
+634:        </div>
+635:
+636:        <div className="text-center mt-16 py-6 border-t border-gray-300">
+637:          <p className="text-xs text-gray-500 uppercase tracking-widest">WESTERN CLOTHES — Mid-Fidelity Website Wireframe</p>
+638:          <p className="text-xs text-gray-400 mt-1">College Project | 11 Screens | 2026</p>
+639:        </div>
+640:
+641:      </div>
+642:    </div>
+643:  )
+644:}
+645:
+646:/* ───── Shared wireframe components ───────────────────────────────── */
+647:
+648:function Screen({ number, title, children }: { number: number; title: string; children: React.ReactNode }) {
+649:  return (
+650:    <section className="border border-gray-400 bg-white shadow-sm overflow-hidden">
+651:      <div className="flex items-center gap-3 bg-gray-800 px-4 py-2">
+652:        <span className="text-white text-xs font-bold tracking-widest">SCREEN {number}</span>
+653:        <span className="text-gray-300 text-xs">—</span>
+654:        <span className="text-gray-200 text-xs uppercase tracking-widest">{title}</span>
+655:      </div>
+656:      {children}
+657:    </section>
+658:  )
+659:}
+660:
+661:function NavBar() {
+662:  return (
+663:    <div className="border-b border-gray-300 px-6">
+664:      <div className="flex items-center justify-between py-3 border-b border-gray-200">
+665:        <div className="text-sm font-bold tracking-widest text-gray-800 uppercase">WESTERN CLOTHES</div>
+666:        <div className="flex-1 mx-6">
+667:          <div className="flex items-center border border-gray-300 bg-gray-50">
+668:            <input
+669:              className="flex-1 text-xs px-3 py-1.5 bg-transparent text-gray-700 placeholder-gray-400 outline-none"
+670:              placeholder="Search for products, brands and more..."
+671:            />
+672:            <button className="bg-gray-800 text-white text-xs px-3 py-1.5 border-l border-gray-300">🔍</button>
+673:          </div>
+674:        </div>
+675:        <div className="flex items-center gap-4 text-xs text-gray-700">
+676:          <div className="flex flex-col items-center cursor-pointer">
+677:            <span className="text-base">👤</span>
+678:            <span className="text-xs">Account</span>
+679:          </div>
+680:          <div className="flex flex-col items-center cursor-pointer relative">
+681:            <span className="text-base">🛒</span>
+682:            <span className="text-xs">Cart</span>
+683:            <span className="absolute -top-1 -right-1 bg-gray-800 text-white text-xs w-4 h-4 flex items-center justify-center rounded-full">3</span>
+684:          </div>
+685:          <div className="flex flex-col items-center cursor-pointer">
+686:            <span className="text-base">❤️</span>
+687:            <span className="text-xs">Wishlist</span>
+688:          </div>
+689:        </div>
+690:      </div>
+691:      <nav className="flex items-center gap-6 py-2 text-xs text-gray-600 font-medium">
+692:        {["Home", "Women", "Men", "New Arrivals", "Sale", "About Us", "Contact Us"].map((link) => (
+693:          <span
+694:            key={link}
+695:            className={`cursor-pointer uppercase tracking-wide ${link === "Home" ? "text-gray-900 border-b-2 border-gray-800 pb-0.5" : "hover:text-gray-900"}`}
+696:          >
+697:            {link}
+698:          </span>
+699:        ))}
+700:      </nav>
+701:    </div>
+702:  )
+703:}
+704:
+705:function ImgBox({ w, h, label, className = "" }: { w: string; h: string; label: string; className?: string }) {
+706:  return (
+707:    <div className={`${w} ${h} bg-gray-200 border border-gray-300 flex flex-col items-center justify-center gap-1 flex-shrink-0 ${className}`}>
+708:      <div className="text-gray-400 text-2xl">▭</div>
+709:      <span className="text-xs text-gray-400 text-center px-2">{label}</span>
+710:    </div>
+711:  )
+712:}
+713:
+714:function InputField({ label, placeholder, type = "text" }: { label: string; placeholder: string; type?: string }) {
+715:  return (
+716:    <div>
+717:      <label className="block text-xs font-medium text-gray-700 mb-1">{label}</label>
+718:      <input
+719:        type={type}
+720:        placeholder={placeholder}
+721:        className="w-full border border-gray-300 text-xs px-3 py-2 text-gray-700 bg-white placeholder-gray-400 outline-none"
+722:      />
+723:    </div>
+724:  )
+725:}
+726:
+727:function WireButton({ label }: { label: string }) {
+728:  return (
+729:    <button className="w-full bg-gray-800 text-white text-xs py-2.5 border border-gray-800 hover:bg-gray-700 font-semibold uppercase tracking-widest">
+730:      {label}
+731:    </button>
+732:  )
+733:}
+734:
+735:function CheckBox() {
+736:  return <div className="w-3.5 h-3.5 border border-gray-400 flex-shrink-0 mt-0.5" />
+737:}
+738:
+739:function FilterGroup({ title, children }: { title: string; children: React.ReactNode }) {
+740:  return (
+741:    <div>
+742:      <h4 className="text-xs font-bold text-gray-700 uppercase tracking-wide border-b border-gray-200 pb-1 mb-2">{title}</h4>
+743:      <div className="space-y-1">{children}</div>
+744:    </div>
+745:  )
+746:}
+747:
+748:function FilterItem({ label }: { label: string }) {
+749:  return (
+750:    <label className="flex items-center gap-2 text-xs text-gray-600 cursor-pointer">
+751:      <CheckBox /> {label}
+752:    </label>
+753:  )
+754:}
+755:
+756:function ProductCard({ name, price }: { name: string; price: string }) {
+757:  return (
+758:    <div className="border border-gray-300 bg-white">
+759:      <ImgBox w="w-full" h="h-36" label="Product Image" />
+760:      <div className="p-3 space-y-1.5">
+761:        <p className="text-xs font-semibold text-gray-800 leading-tight">{name}</p>
+762:        <p className="text-xs font-bold text-gray-800">{price}</p>
+763:        <div className="flex items-center gap-1">
+764:          {[1, 2, 3, 4, 5].map((s) => (
+765:            <span key={s} className={`text-xs ${s <= 4 ? "text-gray-600" : "text-gray-300"}`}>★</span>
+766:          ))}
+767:          <span className="text-xs text-gray-400">(24)</span>
+768:        </div>
+769:        <button className="w-full border border-gray-400 text-gray-700 text-xs py-1.5 hover:bg-gray-100 uppercase tracking-wide mt-1">
+770:          Add to Cart
+771:        </button>
+772:      </div>
+773:    </div>
+774:  )
+775:}
+776:
+777:function MiniProductCard({ name, price }: { name: string; price: string }) {
+778:  return (
+779:    <div className="border border-gray-300 bg-white">
+780:      <ImgBox w="w-full" h="h-28" label="Product" />
+781:      <div className="p-2 space-y-1">
+782:        <p className="text-xs font-semibold text-gray-800 truncate">{name}</p>
+783:        <p className="text-xs text-gray-700">{price}</p>
+784:        <button className="w-full border border-gray-300 text-gray-600 text-xs py-1 hover:bg-gray-50">
+785:          Add to Cart
+786:        </button>
+787:      </div>
+788:    </div>
+789:  )
+790:}
+791:
+792:function SectionLabel({ children }: { children: React.ReactNode }) {
+793:  return (
+794:    <h3 className="text-sm font-bold text-gray-800 uppercase tracking-wide border-b border-gray-200 pb-1">
+795:      {children}
+796:    </h3>
+797:  )
+798:}
+799:
+800:function SummaryRow({ label, value, bold = false }: { label: string; value: string; bold?: boolean }) {
+801:  return (
+802:    <div className={`flex justify-between text-xs ${bold ? "font-bold text-gray-800" : "text-gray-700"}`}>
+803:      <span>{label}</span>
+804:      <span>{value}</span>
+805:    </div>
+806:  )
+807:}
+
+(End of file — 807 lines.)
