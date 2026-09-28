@@ -1,5 +1,89 @@
 import { useState, type FormEvent } from "react"
 
+const assetRoot = "/assets/western-clothes"
+
+type Product = {
+  name: string
+  price: string
+  image: string
+  alt: string
+}
+
+const products = {
+  floral: {
+    name: "Floral Midi Dress",
+    price: "₹ 1,499",
+    image: `${assetRoot}/product-floral-dress.jpg`,
+    alt: "Woman wearing a floral midi dress",
+  },
+  denim: {
+    name: "Denim Jacket",
+    price: "₹ 2,199",
+    image: `${assetRoot}/product-denim-jacket.jpg`,
+    alt: "Classic button-front denim jacket",
+  },
+  boho: {
+    name: "Boho Top",
+    price: "₹ 799",
+    image: `${assetRoot}/product-boho-top.jpg`,
+    alt: "Woman in a western-inspired boho outfit",
+  },
+  jeans: {
+    name: "Straight-Cut Jeans",
+    price: "₹ 1,699",
+    image: `${assetRoot}/product-jeans.jpg`,
+    alt: "Denim jeans styled in a neutral flat lay",
+  },
+  belt: {
+    name: "Leather Belt Bag",
+    price: "₹ 999",
+    image: `${assetRoot}/product-belt-accessory.jpg`,
+    alt: "Western leather belt and denim styling",
+  },
+  plaid: {
+    name: "Plaid Skirt",
+    price: "₹ 1,099",
+    image: `${assetRoot}/product-plaid.jpg`,
+    alt: "Western apparel arranged in a neutral flat lay",
+  },
+  boots: {
+    name: "Cowboy Boots",
+    price: "₹ 1,299",
+    image: `${assetRoot}/product-boots.jpg`,
+    alt: "Pair of classic cowboy boots",
+  },
+} satisfies Record<string, Product>
+
+const categoryImages = [
+  {
+    name: "Women",
+    image: `${assetRoot}/category-women.jpg`,
+    alt: "Woman in a floral western-style dress",
+  },
+  {
+    name: "Men",
+    image: `${assetRoot}/category-men.jpg`,
+    alt: "Man wearing a denim jacket",
+  },
+  {
+    name: "New Arrivals",
+    image: `${assetRoot}/category-new-arrivals.jpg`,
+    alt: "New season coats on a clothing rack",
+  },
+  {
+    name: "Sale",
+    image: `${assetRoot}/category-sale.jpg`,
+    alt: "Cowboy boots and hat",
+  },
+]
+
+const floralGallery = [
+  products.floral.image,
+  `${assetRoot}/product-floral-dress-detail-1.jpg`,
+  `${assetRoot}/product-floral-dress-detail-2.jpg`,
+  `${assetRoot}/product-floral-dress-detail-3.jpg`,
+]
+
 export default function App() {
   const customerLogin = useFormValidation(validateCustomerLogin)
   const checkout = useFormValidation(validateCheckout)
@@ -12,9 +96,7 @@ export default function App() {
       <div className="max-w-5xl mx-auto">
         {/* Page Header */}
         <div className="mb-8 text-center sm:mb-10">
-          <h1 className="text-xl font-bold uppercase tracking-widest text-gray-800 sm:text-2xl">
-            WESTERN CLOTHES
-          </h1>
+          <BrandLogo variant="stacked" className="mx-auto" />
           <p className="text-sm text-gray-500 mt-1">
             Mid-Fidelity Website Wireframe — 11 Screens
           </p>
@@ -25,15 +107,7 @@ export default function App() {
           {/* ── SCREEN 1: LOGIN PAGE ─────────────────────────────────── */}
           <Screen number={1} title="LOGIN PAGE">
             <div className="flex flex-col items-center px-4 py-8 sm:px-6 sm:py-10">
-              <div className="mb-6 text-center">
-                <div className="text-xl font-bold tracking-widest text-gray-800 uppercase border-b-2 border-gray-800 pb-1">
-                  WESTERN CLOTHES
-                </div>
-                <div className="text-xs text-gray-500 mt-1">
-                  Your Western Style Destination
-                </div>
-              </div>
-              <ImgBox w="w-48" h="h-32" label="Brand Image" className="mb-6" />
+              <BrandLogo variant="stacked" tagline className="mb-7" />
               <form
                 className="w-full max-w-sm space-y-3"
                 noValidate
@@ -80,11 +154,15 @@ export default function App() {
             <NavBar />
             <div className="space-y-5 px-4 py-4 sm:px-6">
               <div className="relative">
-                <ImgBox
+                <WireImage
+                  src={`${assetRoot}/hero-western-fashion.jpg`}
+                  alt="Woman wearing a western-inspired denim outfit"
                   w="w-full"
                   h="h-56 sm:h-52"
-                  label="Hero Banner — New Arrivals"
+                  eager
+                  objectPosition="center 42%"
                 />
+                <div className="absolute inset-0 bg-gray-900/20" />
                 <div className="absolute inset-0 flex flex-col items-center justify-center">
                   <div className="mx-3 border border-gray-300 bg-white/90 px-4 py-3 text-center sm:px-6">
                     <p className="text-xs text-gray-500 uppercase tracking-widest">
@@ -105,14 +183,19 @@ export default function App() {
               <div>
                 <SectionLabel>Shop by Category</SectionLabel>
                 <div className="mt-2 grid grid-cols-2 gap-3 md:grid-cols-4">
-                  {["Women", "Men", "New Arrivals", "Sale"].map((cat) => (
+                  {categoryImages.map((category) => (
                     <div
-                      key={cat}
+                      key={category.name}
                       className="border border-gray-300 text-center p-3 bg-white"
                     >
-                      <ImgBox w="w-full" h="h-24" label={cat} />
+                      <WireImage
+                        src={category.image}
+                        alt={category.alt}
+                        w="w-full"
+                        h="h-24"
+                      />
                       <p className="text-xs font-semibold text-gray-700 mt-2 uppercase tracking-wide">
-                        {cat}
+                        {category.name}
                       </p>
                     </div>
                   ))}
@@ -121,11 +204,14 @@ export default function App() {
               <div>
                 <SectionLabel>Featured Products</SectionLabel>
                 <div className="mt-2 grid grid-cols-2 gap-3 md:grid-cols-4">
-                  {["Denim Jacket", "Floral Dress", "Boots", "Plaid Shirt"].map(
-                    (p) => (
-                      <MiniProductCard key={p} name={p} price="₹ 1,299" />
-                    ),
-                  )}
+                  {[
+                    products.denim,
+                    products.floral,
+                    products.boots,
+                    products.plaid,
+                  ].map((product) => (
+                    <MiniProductCard key={product.name} product={product} />
+                  ))}
                 </div>
               </div>
             </div>
@@ -211,14 +297,14 @@ export default function App() {
                 </div>
                 <div className="grid min-w-0 flex-1 grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
                   {[
-                    { name: "Floral Midi Dress", price: "₹ 1,499" },
-                    { name: "Denim Jacket", price: "₹ 2,199" },
-                    { name: "Boho Top", price: "₹ 799" },
-                    { name: "Straight-Cut Jeans", price: "₹ 1,699" },
-                    { name: "Leather Belt Bag", price: "₹ 999" },
-                    { name: "Plaid Skirt", price: "₹ 1,099" },
-                  ].map((p) => (
-                    <ProductCard key={p.name} name={p.name} price={p.price} />
+                    products.floral,
+                    products.denim,
+                    products.boho,
+                    products.jeans,
+                    products.belt,
+                    products.plaid,
+                  ].map((product) => (
+                    <ProductCard key={product.name} product={product} />
                   ))}
                 </div>
               </div>
@@ -237,14 +323,22 @@ export default function App() {
               </div>
               <div className="flex flex-col gap-6 md:flex-row md:gap-8">
                 <div className="flex min-w-0 flex-col gap-2">
-                  <ImgBox w="w-full sm:w-64" h="h-80" label="Product Image" />
+                  <WireImage
+                    src={products.floral.image}
+                    alt={products.floral.alt}
+                    w="w-full sm:w-64"
+                    h="h-80"
+                    objectPosition="center 30%"
+                  />
                   <div className="flex gap-2">
-                    {[1, 2, 3, 4].map((t) => (
-                      <ImgBox
-                        key={t}
+                    {floralGallery.map((image, index) => (
+                      <WireImage
+                        key={image}
+                        src={image}
+                        alt={`Floral midi dress view ${index + 1}`}
                         w="w-[calc((100%-1.5rem)/4)] sm:w-14"
                         h="h-14"
-                        label={`View ${t}`}
+                        objectPosition="center 30%"
                       />
                     ))}
                   </div>
@@ -365,6 +459,8 @@ export default function App() {
                         color: "Grey",
                         price: "₹ 1,499",
                         qty: 1,
+                        image: products.floral.image,
+                        alt: products.floral.alt,
                       },
                       {
                         name: "Denim Jacket",
@@ -372,6 +468,8 @@ export default function App() {
                         color: "Black",
                         price: "₹ 2,199",
                         qty: 2,
+                        image: products.denim.image,
+                        alt: products.denim.alt,
                       },
                       {
                         name: "Boho Top",
@@ -379,13 +477,20 @@ export default function App() {
                         color: "White",
                         price: "₹ 799",
                         qty: 1,
+                        image: products.boho.image,
+                        alt: products.boho.alt,
                       },
                     ].map((item) => (
                       <div
                         key={item.name}
                         className="grid grid-cols-[auto_1fr_auto_auto_auto] gap-4 items-center py-3 border-b border-gray-100"
                       >
-                        <ImgBox w="w-16" h="h-20" label="Img" />
+                        <WireImage
+                          src={item.image}
+                          alt={item.alt}
+                          w="w-16"
+                          h="h-20"
+                        />
                         <div>
                           <p className="text-xs font-semibold text-gray-800">
                             {item.name}
@@ -555,14 +660,35 @@ export default function App() {
                       3. Order Summary
                     </h3>
                     {[
-                      { name: "Floral Midi Dress × 1", price: "₹ 1,499" },
-                      { name: "Denim Jacket × 2", price: "₹ 4,398" },
-                      { name: "Boho Top × 1", price: "₹ 799" },
+                      {
+                        name: "Floral Midi Dress × 1",
+                        price: "₹ 1,499",
+                        image: products.floral.image,
+                        alt: products.floral.alt,
+                      },
+                      {
+                        name: "Denim Jacket × 2",
+                        price: "₹ 4,398",
+                        image: products.denim.image,
+                        alt: products.denim.alt,
+                      },
+                      {
+                        name: "Boho Top × 1",
+                        price: "₹ 799",
+                        image: products.boho.image,
+                        alt: products.boho.alt,
+                      },
                     ].map((it) => (
                       <div
                         key={it.name}
-                        className="flex justify-between text-xs text-gray-700"
+                        className="grid grid-cols-[2.5rem_1fr_auto] items-center gap-2 text-xs text-gray-700"
                       >
+                        <WireImage
+                          src={it.image}
+                          alt={it.alt}
+                          w="w-10"
+                          h="h-12"
+                        />
                         <span>{it.name}</span>
                         <span className="font-medium">{it.price}</span>
                       </div>
@@ -591,10 +717,8 @@ export default function App() {
           {/* ── SCREEN 7: REGISTER PAGE ──────────────────────────────── */}
           <Screen number={7} title="REGISTER PAGE">
             <div className="flex flex-col items-center px-4 py-8 sm:px-6 sm:py-10">
-              <div className="mb-4 text-center">
-                <div className="text-xl font-bold tracking-widest text-gray-800 uppercase">
-                  WESTERN CLOTHES
-                </div>
+              <div className="mb-5 text-center">
+                <BrandLogo variant="stacked" className="mx-auto" />
                 <h2 className="text-base font-semibold text-gray-700 mt-2">
                   Create an Account
                 </h2>
@@ -676,11 +800,13 @@ export default function App() {
                 <div className="w-16 h-0.5 bg-gray-400 mx-auto mt-2" />
               </div>
               <div className="flex flex-col items-start gap-6 md:flex-row md:gap-8">
-                <ImgBox
+                <WireImage
+                  src={`${assetRoot}/about-boutique.jpg`}
+                  alt="Interior of a clothing boutique with garments on display"
                   w="w-full sm:w-64"
                   h="h-44"
-                  label="About Us Image"
                   className="sm:flex-shrink-0"
+                  objectPosition="center"
                 />
                 <div className="space-y-3">
                   <p className="text-xs text-gray-600 leading-5">
@@ -860,9 +986,7 @@ export default function App() {
           <Screen number={10} title="ADMIN LOGIN PAGE">
             <div className="flex flex-col items-center px-4 py-8 sm:px-6 sm:py-10">
               <div className="mb-6 text-center">
-                <div className="text-xl font-bold tracking-widest text-gray-800 uppercase">
-                  WESTERN CLOTHES
-                </div>
+                <BrandLogo variant="stacked" className="mx-auto" />
                 <div className="text-xs text-gray-500 tracking-widest uppercase border border-gray-300 px-3 py-0.5 inline-block mt-2">
                   Admin Portal
                 </div>
@@ -908,9 +1032,7 @@ export default function App() {
             <div className="flex min-h-96 flex-col md:flex-row">
               <div className="flex w-full flex-col bg-gray-800 text-white md:w-44 md:flex-shrink-0">
                 <div className="px-4 py-4 border-b border-gray-600">
-                  <div className="text-xs font-bold tracking-widest uppercase">
-                    Western Clothes
-                  </div>
+                  <BrandLogo inverse variant="sidebar" />
                   <div className="text-xs text-gray-400 mt-0.5">
                     Admin Panel
                   </div>
@@ -1192,9 +1314,7 @@ function NavBar() {
   return (
     <div className="border-b border-gray-300 px-4 sm:px-6">
       <div className="flex flex-col gap-3 border-b border-gray-200 py-3 md:flex-row md:items-center md:justify-between">
-        <div className="text-center text-sm font-bold uppercase tracking-widest text-gray-800 md:text-left">
-          WESTERN CLOTHES
-        </div>
+        <BrandLogo className="justify-center md:justify-start" />
         <div className="min-w-0 flex-1 md:mx-6">
           <div className="flex items-center border border-gray-300 bg-gray-50">
             <input
@@ -1259,23 +1379,114 @@ function NavBar() {
   )
 }
 
-function ImgBox({
-  w,
-  h,
-  label,
+function BrandLogo({
+  variant = "compact",
+  inverse = false,
+  tagline = false,
   className = "",
 }: {
+  variant?: "compact" | "stacked" | "sidebar"
+  inverse?: boolean
+  tagline?: boolean
+  className?: string
+}) {
+  const stacked = variant === "stacked"
+  const sidebar = variant === "sidebar"
+  const vertical = stacked || sidebar
+  const markSize = stacked
+    ? "h-14 w-[4.5rem]"
+    : sidebar
+      ? "h-8 w-10"
+      : "h-9 w-11"
+  const wordmarkSize = stacked
+    ? "text-lg sm:text-xl"
+    : sidebar
+      ? "text-[10px]"
+      : "text-xs"
+  const foreground = inverse ? "text-white" : "text-gray-800"
+  const secondary = inverse ? "text-gray-400" : "text-gray-500"
+
+  return (
+    <div
+      className={`flex ${
+        vertical ? "flex-col text-center" : "flex-row text-left"
+      } items-center gap-2 ${className}`}
+    >
+      <svg
+        viewBox="0 0 64 48"
+        aria-hidden="true"
+        className={`${markSize} flex-shrink-0 ${foreground}`}
+      >
+        <rect
+          x="1.5"
+          y="1.5"
+          width="61"
+          height="45"
+          fill="currentColor"
+          stroke="currentColor"
+          strokeWidth="3"
+        />
+        <path
+          d="M8 12l5 24 8-14 8 14 5-24"
+          fill="none"
+          stroke={inverse ? "#1f2937" : "#ffffff"}
+          strokeLinecap="square"
+          strokeLinejoin="miter"
+          strokeWidth="4"
+        />
+        <path
+          d="M55 15c-2.5-2.5-5.2-3.5-8-3.5-6.8 0-11 5-11 12.5s4.2 12.5 11 12.5c2.8 0 5.5-1 8-3.5"
+          fill="none"
+          stroke={inverse ? "#1f2937" : "#ffffff"}
+          strokeLinecap="square"
+          strokeWidth="4"
+        />
+      </svg>
+      <div>
+        <div
+          className={`${wordmarkSize} whitespace-nowrap font-bold uppercase leading-none tracking-[0.16em] ${foreground}`}
+        >
+          Western Clothes
+        </div>
+        {tagline && (
+          <div className={`mt-1 text-xs ${secondary}`}>
+            Your Western Style Destination
+          </div>
+        )}
+      </div>
+    </div>
+  )
+}
+
+function WireImage({
+  src,
+  alt,
+  w,
+  h,
+  className = "",
+  objectPosition = "center",
+  eager = false,
+}: {
+  src: string
+  alt: string
   w: string
   h: string
-  label: string
   className?: string
+  objectPosition?: string
+  eager?: boolean
 }) {
   return (
     <div
-      className={`${w} ${h} bg-gray-200 border border-gray-300 flex flex-col items-center justify-center gap-1 flex-shrink-0 ${className}`}
+      className={`${w} ${h} flex-shrink-0 overflow-hidden border border-gray-300 bg-gray-200 ${className}`}
     >
-      <div className="text-gray-400 text-2xl">▭</div>
-      <span className="text-xs text-gray-400 text-center px-2">{label}</span>
+      <img
+        src={src}
+        alt={alt}
+        loading={eager ? "eager" : "lazy"}
+        decoding="async"
+        style={{ objectPosition }}
+        className="h-full w-full object-cover grayscale contrast-[.9]"
+      />
     </div>
   )
 }
@@ -1387,15 +1598,21 @@ function FilterItem({ label }: { label: string }) {
   )
 }
 
-function ProductCard({ name, price }: { name: string price: string }) {
+function ProductCard({ product }: { product: Product }) {
   return (
     <div className="border border-gray-300 bg-white">
-      <ImgBox w="w-full" h="h-36" label="Product Image" />
+      <WireImage
+        src={product.image}
+        alt={product.alt}
+        w="w-full"
+        h="h-36"
+        objectPosition="center 30%"
+      />
       <div className="p-3 space-y-1.5">
         <p className="text-xs font-semibold text-gray-800 leading-tight">
-          {name}
+          {product.name}
         </p>
-        <p className="text-xs font-bold text-gray-800">{price}</p>
+        <p className="text-xs font-bold text-gray-800">{product.price}</p>
         <div className="flex items-center gap-1" aria-label="Rated 4 out of 5">
           {[1, 2, 3, 4, 5].map((s) => (
             <span
@@ -1415,13 +1632,21 @@ function ProductCard({ name, price }: { name: string price: string }) {
   )
 }
 
-function MiniProductCard({ name, price }: { name: string price: string }) {
+function MiniProductCard({ product }: { product: Product }) {
   return (
     <div className="border border-gray-300 bg-white">
-      <ImgBox w="w-full" h="h-28" label="Product" />
+      <WireImage
+        src={product.image}
+        alt={product.alt}
+        w="w-full"
+        h="h-28"
+        objectPosition="center 30%"
+      />
       <div className="p-2 space-y-1">
-        <p className="text-xs font-semibold text-gray-800 truncate">{name}</p>
-        <p className="text-xs text-gray-700">{price}</p>
+        <p className="text-xs font-semibold text-gray-800 truncate">
+          {product.name}
+        </p>
+        <p className="text-xs text-gray-700">{product.price}</p>
         <button className="w-full border border-gray-300 text-gray-600 text-xs py-1 hover:bg-gray-50">
           Add to Cart
         </button>
