@@ -1,4 +1,12 @@
+import { useState, type FormEvent } from "react"
+
 export default function App() {
+  const customerLogin = useFormValidation(validateCustomerLogin)
+  const checkout = useFormValidation(validateCheckout)
+  const register = useFormValidation(validateRegister)
+  const contact = useFormValidation(validateContact)
+  const adminLogin = useFormValidation(validateAdminLogin)
+
   return (
     <div className="min-h-screen bg-gray-100 px-3 py-6 sm:px-6 sm:py-10">
       <div className="max-w-5xl mx-auto">
@@ -26,15 +34,23 @@ export default function App() {
                 </div>
               </div>
               <ImgBox w="w-48" h="h-32" label="Brand Image" className="mb-6" />
-              <div className="w-full max-w-sm space-y-3">
+              <form
+                className="w-full max-w-sm space-y-3"
+                noValidate
+                onSubmit={customerLogin.handleSubmit}
+              >
                 <InputField
                   label="Email / Username"
+                  name="identity"
                   placeholder="Enter your email or username"
+                  error={customerLogin.errors.identity}
                 />
                 <InputField
                   label="Password"
+                  name="password"
                   placeholder="Enter your password"
                   type="password"
+                  error={customerLogin.errors.password}
                 />
                 <div className="flex items-center justify-between text-xs text-gray-600">
                   <label className="flex items-center gap-1.5 cursor-pointer">
@@ -45,13 +61,17 @@ export default function App() {
                   </span>
                 </div>
                 <WireButton label="LOGIN" />
+                <ValidationSuccess
+                  message="Login details validated successfully."
+                  visible={customerLogin.success}
+                />
                 <p className="text-center text-xs text-gray-500 mt-2">
                   {"Don't have an account? "}
                   <span className="underline cursor-pointer text-gray-700 font-medium">
                     Register here
                   </span>
                 </p>
-              </div>
+              </form>
             </div>
           </Screen>
 
@@ -421,7 +441,11 @@ export default function App() {
           {/* ── SCREEN 6: CHECKOUT PAGE ──────────────────────────────── */}
           <Screen number={6} title="CHECKOUT PAGE">
             <NavBar />
-            <div className="px-4 py-4 sm:px-6">
+            <form
+              className="px-4 py-4 sm:px-6"
+              noValidate
+              onSubmit={checkout.handleSubmit}
+            >
               <h2 className="text-base font-bold text-gray-800 mb-4">
                 Checkout
               </h2>
@@ -434,26 +458,45 @@ export default function App() {
                     <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                       <InputField
                         label="Full Name"
+                        name="fullName"
                         placeholder="e.g. Priya Sharma"
+                        error={checkout.errors.fullName}
                       />
                       <InputField
                         label="Mobile Number"
+                        name="mobile"
                         placeholder="10-digit mobile number"
+                        error={checkout.errors.mobile}
                       />
                       <div className="sm:col-span-2">
                         <InputField
                           label="Address (House No., Street, Area)"
+                          name="address"
                           placeholder="Enter full address"
+                          error={checkout.errors.address}
                         />
                       </div>
-                      <InputField label="City" placeholder="City" />
-                      <InputField label="State" placeholder="State" />
+                      <InputField
+                        label="City"
+                        name="city"
+                        placeholder="City"
+                        error={checkout.errors.city}
+                      />
+                      <InputField
+                        label="State"
+                        name="state"
+                        placeholder="State"
+                        error={checkout.errors.state}
+                      />
                       <InputField
                         label="Pincode"
+                        name="pincode"
                         placeholder="6-digit pincode"
+                        error={checkout.errors.pincode}
                       />
                       <InputField
                         label="Landmark (Optional)"
+                        name="landmark"
                         placeholder="Near landmark"
                       />
                     </div>
@@ -535,10 +578,14 @@ export default function App() {
                     <button className="w-full bg-gray-800 text-white text-xs py-2.5 border border-gray-800 hover:bg-gray-700 font-medium uppercase tracking-wide mt-2">
                       Place Order →
                     </button>
+                    <ValidationSuccess
+                      message="Checkout details validated successfully."
+                      visible={checkout.success}
+                    />
                   </div>
                 </div>
               </div>
-            </div>
+            </form>
           </Screen>
 
           {/* ── SCREEN 7: REGISTER PAGE ──────────────────────────────── */}
@@ -555,31 +602,46 @@ export default function App() {
                   Join us and explore the latest western styles
                 </p>
               </div>
-              <div className="w-full max-w-sm space-y-3">
+              <form
+                className="w-full max-w-sm space-y-3"
+                noValidate
+                onSubmit={register.handleSubmit}
+              >
                 <InputField
                   label="Full Name"
+                  name="fullName"
                   placeholder="Enter your full name"
+                  error={register.errors.fullName}
                 />
                 <InputField
                   label="Email Address"
+                  name="email"
                   placeholder="Enter your email address"
+                  type="email"
+                  error={register.errors.email}
                 />
                 <InputField
                   label="Mobile Number"
+                  name="mobile"
                   placeholder="10-digit mobile number"
+                  error={register.errors.mobile}
                 />
                 <InputField
                   label="Password"
+                  name="password"
                   placeholder="Create a password (min. 8 characters)"
                   type="password"
+                  error={register.errors.password}
                 />
                 <InputField
                   label="Confirm Password"
+                  name="confirmPassword"
                   placeholder="Re-enter your password"
                   type="password"
+                  error={register.errors.confirmPassword}
                 />
                 <label className="flex items-start gap-2 text-xs text-gray-600 cursor-pointer">
-                  <CheckBox />
+                  <CheckBox name="terms" />
                   <span>
                     {"I agree to the "}
                     <span className="underline">Terms & Conditions</span>
@@ -587,14 +649,19 @@ export default function App() {
                     <span className="underline">Privacy Policy</span>
                   </span>
                 </label>
+                <ValidationMessage message={register.errors.terms} />
                 <WireButton label="REGISTER" />
+                <ValidationSuccess
+                  message="Registration details validated successfully."
+                  visible={register.success}
+                />
                 <p className="text-center text-xs text-gray-500 mt-2">
                   {"Already have an account? "}
                   <span className="underline cursor-pointer text-gray-700 font-medium">
                     Login here
                   </span>
                 </p>
-              </div>
+              </form>
             </div>
           </Screen>
 
@@ -729,34 +796,62 @@ export default function App() {
                     <p className="text-xs text-gray-500">Sunday: Closed</p>
                   </div>
                 </div>
-                <div className="min-w-0 flex-1 space-y-3 border border-gray-300 p-4 sm:p-5">
+                <form
+                  className="min-w-0 flex-1 space-y-3 border border-gray-300 p-4 sm:p-5"
+                  noValidate
+                  onSubmit={contact.handleSubmit}
+                >
                   <h3 className="text-sm font-bold text-gray-700 border-b border-gray-200 pb-2">
                     Send Us a Message
                   </h3>
                   <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                     <InputField
                       label="Your Name"
+                      name="name"
                       placeholder="Enter your name"
+                      error={contact.errors.name}
                     />
                     <InputField
                       label="Email Address"
+                      name="email"
                       placeholder="Enter your email"
+                      type="email"
+                      error={contact.errors.email}
                     />
                   </div>
-                  <InputField label="Subject" placeholder="Enter subject" />
+                  <InputField
+                    label="Subject"
+                    name="subject"
+                    placeholder="Enter subject"
+                    error={contact.errors.subject}
+                  />
                   <div>
                     <label className="block text-xs font-medium text-gray-700 mb-1">
                       Message
                     </label>
                     <textarea
-                      className="w-full border border-gray-300 text-xs px-3 py-2 text-gray-700 bg-white resize-none h-28 placeholder-gray-400 outline-none"
+                      name="message"
+                      aria-invalid={Boolean(contact.errors.message)}
+                      className={`h-28 w-full resize-none border bg-white px-3 py-2 text-xs text-gray-700 outline-none placeholder-gray-400 ${
+                        contact.errors.message
+                          ? "border-gray-800"
+                          : "border-gray-300"
+                      }`}
                       placeholder="Write your message here..."
                     />
+                    <ValidationMessage message={contact.errors.message} />
                   </div>
-                  <button className="bg-gray-800 text-white text-xs px-6 py-2.5 border border-gray-800 hover:bg-gray-700 font-medium uppercase tracking-wide">
+                  <button
+                    type="submit"
+                    className="bg-gray-800 text-white text-xs px-6 py-2.5 border border-gray-800 hover:bg-gray-700 font-medium uppercase tracking-wide"
+                  >
                     Send Message →
                   </button>
-                </div>
+                  <ValidationSuccess
+                    message="Message details validated successfully."
+                    visible={contact.success}
+                  />
+                </form>
               </div>
             </div>
           </Screen>
@@ -772,27 +867,39 @@ export default function App() {
                   Admin Portal
                 </div>
               </div>
-              <div className="w-full max-w-xs space-y-4 border border-gray-300 bg-white p-5 sm:p-6">
+              <form
+                className="w-full max-w-xs space-y-4 border border-gray-300 bg-white p-5 sm:p-6"
+                noValidate
+                onSubmit={adminLogin.handleSubmit}
+              >
                 <h2 className="text-sm font-bold text-gray-800 text-center uppercase tracking-widest border-b border-gray-200 pb-3">
                   Admin Login
                 </h2>
                 <InputField
                   label="Username"
+                  name="username"
                   placeholder="Enter admin username"
+                  error={adminLogin.errors.username}
                 />
                 <InputField
                   label="Password"
+                  name="password"
                   placeholder="Enter admin password"
                   type="password"
+                  error={adminLogin.errors.password}
                 />
                 <label className="flex items-center gap-2 text-xs text-gray-600 cursor-pointer">
                   <CheckBox /> Remember Me
                 </label>
                 <WireButton label="LOGIN" />
+                <ValidationSuccess
+                  message="Admin credentials validated successfully."
+                  visible={adminLogin.success}
+                />
                 <p className="text-center text-xs text-gray-400 mt-1">
                   Authorized personnel only
                 </p>
-              </div>
+              </form>
             </div>
           </Screen>
 
@@ -1175,12 +1282,16 @@ function ImgBox({
 
 function InputField({
   label,
+  name,
   placeholder,
   type = "text",
+  error,
 }: {
   label: string
+  name?: string
   placeholder: string
   type?: string
+  error?: string
 }) {
   return (
     <div>
@@ -1188,25 +1299,66 @@ function InputField({
         {label}
       </label>
       <input
+        name={name}
         type={type}
         placeholder={placeholder}
-        className="w-full border border-gray-300 text-xs px-3 py-2 text-gray-700 bg-white placeholder-gray-400 outline-none"
+        aria-invalid={Boolean(error)}
+        className={`w-full border px-3 py-2 text-xs text-gray-700 bg-white placeholder-gray-400 outline-none ${
+          error ? "border-gray-800" : "border-gray-300"
+        }`}
       />
+      <ValidationMessage message={error} />
     </div>
   )
 }
 
 function WireButton({ label }: { label: string }) {
   return (
-    <button className="w-full bg-gray-800 text-white text-xs py-2.5 border border-gray-800 hover:bg-gray-700 font-semibold uppercase tracking-widest">
+    <button
+      type="submit"
+      className="w-full bg-gray-800 text-white text-xs py-2.5 border border-gray-800 hover:bg-gray-700 font-semibold uppercase tracking-widest"
+    >
       {label}
     </button>
   )
 }
 
-function CheckBox() {
+function CheckBox({ name }: { name?: string }) {
   return (
-    <div className="w-3.5 h-3.5 border border-gray-400 flex-shrink-0 mt-0.5" />
+    <input
+      type="checkbox"
+      name={name}
+      className="mt-0.5 h-3.5 w-3.5 flex-shrink-0 accent-gray-800"
+    />
+  )
+}
+
+function ValidationMessage({ message }: { message?: string }) {
+  if (!message) return null
+
+  return (
+    <p role="alert" className="mt-1 text-xs font-medium text-gray-700">
+      {message}
+    </p>
+  )
+}
+
+function ValidationSuccess({
+  message,
+  visible,
+}: {
+  message: string
+  visible: boolean
+}) {
+  if (!visible) return null
+
+  return (
+    <p
+      role="status"
+      className="border border-gray-400 bg-gray-100 px-3 py-2 text-center text-xs font-medium text-gray-700"
+    >
+      {message}
+    </p>
   )
 }
 
@@ -1305,4 +1457,116 @@ function SummaryRow({
       <span>{value}</span>
     </div>
   )
+}
+
+type FormErrors = Record<string, string>
+
+function useFormValidation(validate: (data: FormData) => FormErrors) {
+  const [errors, setErrors] = useState<FormErrors>({})
+  const [success, setSuccess] = useState(false)
+
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+    const nextErrors = validate(new FormData(event.currentTarget))
+
+    setErrors(nextErrors)
+    setSuccess(Object.keys(nextErrors).length === 0)
+  }
+
+  return { errors, success, handleSubmit }
+}
+
+function field(data: FormData, name: string) {
+  return String(data.get(name) ?? "").trim()
+}
+
+function isEmail(value: string) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)
+}
+
+function validateCustomerLogin(data: FormData): FormErrors {
+  const errors: FormErrors = {}
+
+  if (!field(data, "identity")) {
+    errors.identity = "Enter your email address or username."
+  }
+  if (field(data, "password").length < 6) {
+    errors.password = "Password must contain at least 6 characters."
+  }
+
+  return errors
+}
+
+function validateCheckout(data: FormData): FormErrors {
+  const errors: FormErrors = {}
+
+  if (field(data, "fullName").length < 2) {
+    errors.fullName = "Enter your full name."
+  }
+  if (!/^\d{10}$/.test(field(data, "mobile"))) {
+    errors.mobile = "Enter a valid 10-digit mobile number."
+  }
+  if (field(data, "address").length < 8) {
+    errors.address = "Enter a complete delivery address."
+  }
+  if (!field(data, "city")) errors.city = "Enter your city."
+  if (!field(data, "state")) errors.state = "Enter your state."
+  if (!/^\d{6}$/.test(field(data, "pincode"))) {
+    errors.pincode = "Enter a valid 6-digit pincode."
+  }
+
+  return errors
+}
+
+function validateRegister(data: FormData): FormErrors {
+  const errors: FormErrors = {}
+  const email = field(data, "email")
+  const password = field(data, "password")
+
+  if (field(data, "fullName").length < 2) {
+    errors.fullName = "Enter your full name."
+  }
+  if (!isEmail(email)) errors.email = "Enter a valid email address."
+  if (!/^\d{10}$/.test(field(data, "mobile"))) {
+    errors.mobile = "Enter a valid 10-digit mobile number."
+  }
+  if (password.length < 8) {
+    errors.password = "Password must contain at least 8 characters."
+  }
+  if (field(data, "confirmPassword") !== password) {
+    errors.confirmPassword = "Passwords do not match."
+  }
+  if (!data.has("terms")) {
+    errors.terms = "Accept the terms and privacy policy to continue."
+  }
+
+  return errors
+}
+
+function validateContact(data: FormData): FormErrors {
+  const errors: FormErrors = {}
+
+  if (field(data, "name").length < 2) errors.name = "Enter your name."
+  if (!isEmail(field(data, "email"))) {
+    errors.email = "Enter a valid email address."
+  }
+  if (field(data, "subject").length < 3) {
+    errors.subject = "Enter a message subject."
+  }
+  if (field(data, "message").length < 10) {
+    errors.message = "Message must contain at least 10 characters."
+  }
+
+  return errors
+}
+
+function validateAdminLogin(data: FormData): FormErrors {
+  const errors: FormErrors = {}
+
+  if (!field(data, "username")) errors.username = "Enter the admin username."
+  if (field(data, "password").length < 6) {
+    errors.password = "Password must contain at least 6 characters."
+  }
+
+  return errors
 }
